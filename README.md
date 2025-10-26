@@ -4,7 +4,13 @@ Test it live : https://huggingface.co/spaces/sujithh/llm-evaluation
 ## Installation
 1. Install MLC and MLC Flow and activate the virtual environment with the following reference: https://docs.mlcommons.org/mlcflow/install/
 
-2. Create a .env file in the same directory as the customize.py file with the following content:
+2. Download the scripts and clone mlperf-automations repo
+    ```shell
+    mlc pull repo mlcommons@mlperf-automations
+    mlc pull repo llm-gate-exam-evaluation
+    ```
+
+3. Create a .env file in the same directory as the customize.py file with the following content:
     ```shell
     MLC_MODEL_TYPE='gemini' 
     (or 'openai' or 'groq' and make sure to set the corresponding API KEY)
@@ -32,7 +38,7 @@ Test it live : https://huggingface.co/spaces/sujithh/llm-evaluation
     ```
     NOTE: Temporary assets for GATE CS 25 can be obtained from [sujik18/go-script/release](https://github.com/sujik18/go-scripts/releases/tag/v1)
 
-3. To run the script, use the following comm0and:
+4. To run the script, use the following comm0and:
     ```shell
     mlcr llm-evaluation
     ```
