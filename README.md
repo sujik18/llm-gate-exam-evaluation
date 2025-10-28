@@ -10,7 +10,7 @@ Test it live : https://huggingface.co/spaces/sujithh/llm-evaluation
     mlc pull repo llm-gate-exam-evaluation
     ```
 
-3. Create a .env file in the same directory as the customize.py file with the following content:
+3. Create a .env file in the same directory as the customize.py file of app-llm-evaluation with the following content:
     ```shell
     MLC_MODEL_TYPE='gemini' 
     (or 'openai' or 'groq' and make sure to set the corresponding API KEY)
@@ -42,7 +42,8 @@ Test it live : https://huggingface.co/spaces/sujithh/llm-evaluation
     ```shell
     mlcr llm-evaluation
     ```
-
+    NOTE: if the script fails with an error like "Script not found", then please move both the scripts in ~/MLC/repos/mlcommons@mlperf-automations/automation/script/ and the run the command again.
+    
 This one script will automatically download the required GATE question paper and answer key, parse them, and run the specified Gemini model on the questions and answers.
 
 ## Results
