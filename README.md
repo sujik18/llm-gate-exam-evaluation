@@ -1,50 +1,192 @@
-## Demo
-Test it live : https://huggingface.co/spaces/sujithh/llm-evaluation
+# LLM Evaluation on GATE Exam Papers
+
+## Demo  
+Try it live on Hugging Face:  
+[https://huggingface.co/spaces/sujithh/llm-evaluation](https://huggingface.co/spaces/sujithh/llm-evaluation)
+
+---
 
 ## Installation
-1. Install MLC and MLC Flow and activate the virtual environment with the following reference: https://docs.mlcommons.org/mlcflow/install/
 
-2. Download the scripts and clone mlperf-automations repo
-    ```shell
-    mlc pull repo mlcommons@mlperf-automations
-    mlc pull repo llm-gate-exam-evaluation
-    ```
+### 1. Install MLC and MLC Flow  
+Follow the official guide here:  
+ [MLCFlow Installation Docs](https://docs.mlcommons.org/mlcflow/install/)
 
-3. Create a .env file in the same directory as the customize.py file of app-llm-evaluation with the following content:
-    ```shell
-    MLC_MODEL_TYPE='gemini' 
-    (or 'openai' or 'groq' and make sure to set the corresponding API KEY)
+### 2. Pull the Required Repositories
+```bash
+mlc pull repo mlcommons@mlperf-automations
+mlc pull repo llm-gate-exam-evaluation
+```
 
-    GEMINI_API_KEY='<your-api-key>'
-    ```
-    Replace `<your-api-key>` with your actual API key.
+---
 
-    ####  Optional Parameters and their default values
-    ```shell
-    OPENAI_API_KEY='<your-api-key>'
-    GROQ_API_KEY='<your-api-key>'
-    MLC_GEMINI_MODEL = 'models/gemini-2.5-flash' 
-    MLC_GROQ_MODEL='llama-3.3-70b-versatile'
-    MLC_OPENAI_MODEL='gpt-4o'
+### 3. Create a `.env` File
+Create a file named `.env` in the same directory as `customize.py`, and add the following:
 
-    MLC_GATE_QUESTION_PDF_URL = 'https://github.com/user-attachments/files/20423322/CS25set2-questionPaper.pdf'
-    MLC_GATE_ANSWER_PDF_URL = 'https://github.com/user-attachments/files/20423320/CS25set2-answerKey.pdf'
+```bash
+# Choose model provider: gemini | openai | groq
+MLC_MODEL_TYPE='gemini'
 
-    MLC_GATE_QUESTION_PDF_PATH = '~/MLC/repos/local/cache/gate-exam-data/paper.pdf'
-    MLC_GATE_ANSWER_PDF_PATH = '~/MLC/repos/local/cache/gate-exam-data/key.pdf'
-    
-    MLC_GATE_OUTPUT_JSON_PATH = '~/MLC/repos/local/cache/gate-exam-data/output.json'
+# === Gemini Configuration ===
+GEMINI_API_KEY='<your-gemini-api-key>'
+MLC_GEMINI_MODEL='models/gemini-2.5-flash'
+```
 
-    ```
-    NOTE: Temporary assets for GATE CS 25 can be obtained from [sujik18/go-script/release](https://github.com/sujik18/go-scripts/releases/tag/v1)
+Replace `<your-gemini-api-key>` with your actual API key.
 
-4. To run the script, use the following comm0and:
-    ```shell
-    mlcr llm-evaluation
-    ```
-    NOTE: if the script fails with an error like "Script not found", then please move both the scripts in ~/MLC/repos/mlcommons@mlperf-automations/automation/script/ and the run the command again.
-    
-This one script will automatically download the required GATE question paper and answer key, parse them, and run the specified Gemini model on the questions and answers.
+---
+
+### Optional Parameters (Default Values)
+
+```bash
+# --- API Keys for Other Providers ---
+OPENAI_API_KEY='<your-openai-api-key>'
+GROQ_API_KEY='<your-groq-api-key>'
+
+# --- Default Model Configurations ---
+MLC_GEMINI_MODEL='models/gemini-2.5-flash'
+MLC_OPENAI_MODEL='gpt-4o'
+MLC_GROQ_MODEL='llama-3.3-70b-versatile'
+
+# --- GATE PDF Sources and Paths ---
+MLC_GATE_QUESTION_PDF_URL='https://github.com/user-attachments/files/20423322/CS25set2-questionPaper.pdf'
+MLC_GATE_ANSWER_PDF_URL='https://github.com/user-attachments/files/20423320/CS25set2-answerKey.pdf'
+
+MLC_GATE_QUESTION_PDF_PATH='~/MLC/repos/local/cache/gate-exam-data/paper.pdf'
+MLC_GATE_ANSWER_PDF_PATH='~/MLC/repos/local/cache/gate-exam-data/key.pdf'
+MLC_GATE_OUTPUT_JSON_PATH='~/MLC/repos/local/cache/gate-exam-data/output.json'
+```
+
+> **Note:** Temporary assets for GATE CS 2025 can be obtained from [sujik18/go-scripts/releases/tag/v1](https://github.com/sujik18/go-scripts/releases/tag/v1)
+
+---
+
+## Model Configuration Guide
+
+### Gemini (Google AI)
+Set these:
+```bash
+export MLC_MODEL_TYPE='gemini'
+export GEMINI_API_KEY='<your-gemini-api-key>'
+```
+
+#### Available Gemini Models
+| Model Name | Description | Recommended Use |
+|-------------|--------------|------------------|
+| `models/gemini-2.5-flash` | Fast, cost-efficient model with excellent accuracy | Best for evaluation and testing |
+| `models/gemini-2.5-pro` | High-intelligence reasoning model | Best for final benchmarking |
+| `models/gemini-1.5-flash` | Previous-gen lightweight model | For debugging or limited resources |
+| `models/gemini-1.5-pro` | Older high-accuracy reasoning model | For comparison with newer Gemini 2.5 models |
+
+**Example:**
+```bash
+MLC_GEMINI_MODEL='models/gemini-2.5-pro'
+```
+
+---
+
+### OpenAI (ChatGPT / GPT Family)
+Set these:
+```bash
+export MLC_MODEL_TYPE='openai'
+export OPENAI_API_KEY='<your-openai-api-key>'
+```
+
+#### Available OpenAI Models
+| Model Name | Description | Recommended Use |
+|-------------|--------------|------------------|
+| `gpt-4o` | Latest multimodal model (May 2024) – fast and highly capable | Default for most evaluations |
+| `gpt-4o-mini` | Lightweight GPT-4o variant with lower latency | For faster test cycles |
+| `gpt-4-turbo` | Older GPT-4 variant, slightly slower | For backward compatibility |
+| `gpt-3.5-turbo` | Legacy cost-efficient model | For quick experiments |
+
+**Example:**
+```bash
+MLC_OPENAI_MODEL='gpt-4o'
+```
+
+---
+
+### Groq (LLaMA / Qwen / Gemma Models)
+Set these:
+```bash
+export MLC_MODEL_TYPE='groq'
+export GROQ_API_KEY='<your-groq-api-key>'
+```
+
+#### Available Groq Models
+| Model Name | Description | Recommended Use |
+|-------------|--------------|------------------|
+| `llama-3.3-70b-versatile` | Meta’s latest LLaMA 3.3 model – strong reasoning, high precision | For balanced evaluation |
+| `qwen3-32b` | Alibaba’s Qwen 3 model – powerful multilingual and reasoning ability | For broader reasoning and coding tasks |
+| `gemma2-9b-it` | Google’s compact instruction-tuned model | For lightweight experiments |
+| `llama-3.1-8b-instant` | Smaller, high-speed model | For fast inference and prototyping |
+
+**Example:**
+```bash
+MLC_GROQ_MODEL='qwen3-32b'
+```
+
+---
+
+### Model Accuracy Comparison (GATE CS 2025)
+
+| Model | Accuracy (%) | MSQ/NAT (%) |
+|--------|---------------|-------------|
+| **Gemini 2.5 Flash** | **83.08** | **76.82** |
+| **LLaMA 3.3 70B Versatile** | 44.62 | 33.33 |
+| **Gemma 2 9B IT** | 27.69 | 13.67 |
+| **Qwen 3 32B** | 27.69 | — *(to be evaluated)* |
+
+> *These values are based on internal GATE 2025 CS evaluation runs using the same pipeline.*
+
+---
+
+##  Running the Script
+
+Run the evaluation:
+```bash
+mlcr llm-evaluation
+```
+
+If you encounter an error like:
+```
+Script not found
+```
+move both `app-llm-evaluation` and `parse-gate-question` scripts into:
+```
+~/MLC/repos/mlcommons@mlperf-automations/automation/script/
+```
+Then run the command again.
+
+---
+
+## What It Does
+This single command will:
+1. Automatically **download** the GATE question paper and answer key  
+2. **Parse** the questions and map answers  
+3. **Run** the selected LLM (Gemini, GPT-4o, or Groq LLaMA/Qwen) on the dataset  
+4. **Generate** a detailed JSON output with model responses and evaluation metrics  
+
+Output is saved at:
+```
+~/MLC/repos/local/cache/gate-exam-data/output.json
+```
+
+---
+
+## Example Output
+```json
+"summary": {
+    "model-name": "llama-3.3-70b-versatile",
+    "question-paper-filename": "CS25set2-questionPaper.pdf",
+    "correct": 26,
+    "wrong": 39,
+    "total": 65,
+    "total_marks": 28.329999999999995,
+    "accuracy": 40.0
+}
+```
 
 ## Results
 1. Gemini-2.5-flash on GATE-CS 2025 Set 2 paper Test 1
