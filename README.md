@@ -131,12 +131,12 @@ MLC_GROQ_MODEL='qwen3-32b'
 
 ### Model Accuracy Comparison (GATE CS 2025)
 
-| Model | Accuracy (%) | MSQ/NAT (%) |
+| Model | Accuracy (%) | Marks |
 |--------|---------------|-------------|
 | **Gemini 2.5 Flash** | **83.08** | **76.82** |
 | **LLaMA 3.3 70B Versatile** | 44.62 | 33.33 |
 | **Gemma 2 9B IT** | 27.69 | 13.67 |
-| **Qwen 3 32B** | 27.69 | — *(to be evaluated)* |
+| **Qwen 3 32B** | 27.69 | 13.67 |
 
 > *These values are based on internal GATE 2025 CS evaluation runs using the same pipeline.*
 
