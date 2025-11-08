@@ -149,16 +149,6 @@ Run the evaluation:
 mlcr llm-evaluation
 ```
 
-If you encounter an error like:
-```
-Script not found
-```
-move both `app-llm-evaluation` and `parse-gate-question` scripts into:
-```
-~/MLC/repos/mlcommons@mlperf-automations/automation/script/
-```
-Then run the command again.
-
 ---
 
 ## What It Does
